@@ -4,12 +4,12 @@
       <div class="card-content center">
         <span class="card-title">Page de connexion</span>
       </div>
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
         <div class="input-field col s12">
             <input
             type="text"
             id="email"
-            [(ngModel)]="user.email"
+            ngModel
             name="email"
             required
             />
@@ -20,7 +20,7 @@
           <input
             type="password"
             id="password"
-            [(ngModel)]="user.password"
+            ngModel
             name="password"
             required
           />

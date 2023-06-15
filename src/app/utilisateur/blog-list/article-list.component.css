@@ -1,0 +1,12 @@
+.blog-list {
+    /* Styles pour la liste des blogs */
+    width: 100%;
+    padding: 30px;
+    margin-top: 100px ;
+  }
+
+  .marge {
+    margin-top: 50px;
+    position: relative;
+    left: calc(100% - 176px);
+  }

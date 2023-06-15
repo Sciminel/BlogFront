@@ -4,12 +4,12 @@
         <div class="card-content center">
           <span class="card-title">Formulaire d'inscription</span>
         </div>
-        <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
           <div class="input-field col s12">
             <input
               type="text"
               id="name"
-              [(ngModel)]="user.name"
+              ngModel
               name="name"
               required
             />
@@ -19,7 +19,7 @@
             <input
               type="email"
               id="email"
-              [(ngModel)]="user.email"
+              ngModel
               name="email"
               required
             />
@@ -29,7 +29,7 @@
             <input
               type="password"
               id="password"
-              [(ngModel)]="user.password"
+              ngModel
               name="password"
               required
             />

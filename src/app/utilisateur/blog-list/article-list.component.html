@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="blog-list card">
+    <div class="row">
+      <form #formAddArticle="ngForm" (submit)="addArticle(formAddArticle)">
+
+        <div class="input-field col s12">
+          <input type="text" id="titre" ngModel name="titre" required />
+          <label for="titre">Titre de l'article</label>
+        </div>
+
+        <div class="input-field col s12">
+          <textarea name="contenu" id="contenu" class="materialize-textarea" ngModel></textarea> 
+          <label for="contenu">Contenu de l'article</label>
+        </div>
+
+        <div class="file-field col s12 input-field">
+          <div class="btn">
+            <span>File</span>
+            <input type="file">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="Ajouter une image">
+          </div>
+        </div>
+
+        <div class="col s12">
+          <button class="btn waves-effect waves-light" type="submit" [disabled]="formAddArticle.invalid">Ajouter un article</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+  <ul class="collection">
+    <li *ngFor="let item of articles" class="collection-item">
+      <div class="card-content">
+        <div>
+          <span class="card-title">{{ item.titre | uppercase }}</span>
+        </div>
+        {{ item.contenu }}
+      </div>
+      <div class="card-image">
+        <img [src]="item.image">
+      </div>
+
+      <ul>
+        <li *ngFor="let comment of item.comments">{{ comment }}</li>
+      </ul>
+      <!-- 
+      <a class="secondary-content" (click)="toggleComments(article)">
+        {{
+          showComments
+            ? "Masquer les commentaires"
+            : "Afficher les commentaires"
+        }}
+      </a>
+    </li>
+  -->
+    </li>
+  </ul>
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, tap, of, catchError, map } from 'rxjs';
 
-import { User } from '../_model/users.model';
+import { User } from '../_model/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -12,11 +12,11 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
 
-  getUserByEmail(user: User): Observable<User> {
+  getUserByEmail(user: User): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-type': 'application/json'}),
     };
-    return this.http.post<User>(`http://localhost:3000/api/users/login`, user, httpOptions).pipe(
+    return this.http.post<any>(`http://localhost:3000/api/users/login`, user, httpOptions).pipe(
       tap(res => console.log(res)),
       catchError(err => this.handleError(err, undefined))
     );
@@ -35,7 +35,7 @@ export class UserService {
 
 
   private handleError(error: Error, errorValue: any){
-    console.error(error);
+    console.error("UNE ERREUR" + error);
     return of(errorValue);
   }
 
