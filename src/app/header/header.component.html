@@ -1,0 +1,18 @@
+<nav>
+    <div class="nav-wrapper teal">
+      <a href="#" class="brand-logo">Logo</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <!-- Si connecté afficher le profil et la page d'acceuil (liste des articles)-->
+        <li>
+          <a 
+          *ngIf="isSignUp"
+          (click)="changeRoute()"
+          >Connexion</a>
+        </li>
+        <!-- Si page inscription -> Se connecter et inversement -->
+        <li>
+          <a  (click)="changeRoute()" *ngIf="!isSignUp">Inscription</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
