@@ -10,3 +10,19 @@
     position: relative;
     left: calc(100% - 176px);
   }
+
+.parent-size-img {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 1px 0 5px #999;
+}
+
+  img.size-img {
+    width: 250px;
+    height: auto;
+    margin: 0 auto;
+    
+  }

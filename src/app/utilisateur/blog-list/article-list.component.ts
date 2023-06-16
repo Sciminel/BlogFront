@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Article } from 'src/app/_model/article.model';
@@ -15,36 +15,49 @@ export class ArticleListComponent implements OnInit{
 
   article!: Article;
 
+  @Input('test')
+  nameFile: string = '';
+
   userId: string | null = localStorage.getItem('userId');
 
-  constructor(private articleService: ArticleService, private sanitizer: DomSanitizer) {}
+  constructor(private articleService: ArticleService) {}
 
   ngOnInit(): void {
       this.articleService.getAllArticles()
         .subscribe(articles => {
           this.articles = articles;
-          this.articles.forEach(article => {
-            article.image.arrayBuffer()
-              .then(res => console.log(res))
-            console.log()
-            this.getArticleImageUrl(article.image.type)
-          })
         })
+  }
+
+  checkFile($event: any) {
+    this.nameFile = URL.createObjectURL($event.target.files[0]);
   }
 
   addArticle(form: NgForm) {
     this.article = form.value;
+    this.article.image = this.nameFile;
     if (this.userId) {
-      this.article.auteur = +this.userId
-    }
-    this.articleService.addArticle(this.article)
+      this.article.auteur = +this.userId;
+      console.log(this.article.image);
+      this.articleService.addArticle(this.article)
       .subscribe(article => {
-        console.log(article)
+        this.articles.push(article)
+        console.log(article.comments)
+        this.refreshArticles();
+        form.resetForm();
       })
+
+    } else {
+      console.log("Une erreur est survenu lors de l'insertion")
+    }
+
   }
 
-  private getArticleImageUrl(imageData: string): string {
-    return `data:image/*;base64,${imageData}`;
+
+  refreshArticles() {
+    this.articleService.getAllArticles().subscribe((articles) => {
+      this.articles = articles;
+    });
   }
 
 }

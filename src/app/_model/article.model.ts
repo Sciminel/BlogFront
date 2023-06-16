@@ -3,6 +3,6 @@ export class Article {
     titre!: string;
     contenu!: string;
     auteur!: number;
-    image!: Blob;
+    image!: string;
     comments!: Comment[];
 }

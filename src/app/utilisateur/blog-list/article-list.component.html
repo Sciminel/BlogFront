@@ -16,10 +16,10 @@
         <div class="file-field col s12 input-field">
           <div class="btn">
             <span>File</span>
-            <input type="file">
+            <input type="file" name="image" ngModel id="image" (change)="checkFile($event)">
           </div>
           <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Ajouter une image">
+            <input class="file-path validate" type="text"  placeholder="Ajouter une image">
           </div>
         </div>
 
@@ -31,17 +31,19 @@
     </div>
   </div>
 
-
+  
   <ul class="collection">
     <li *ngFor="let item of articles" class="collection-item">
-      <div class="card-content">
-        <div>
-          <span class="card-title">{{ item.titre | uppercase }}</span>
+      <div class="card">
+        <div class="card-content">
+          <div>
+            <span class="card-title">{{ item.titre | uppercase }}</span>
+          </div>
+          {{ item.contenu }}
         </div>
-        {{ item.contenu }}
-      </div>
-      <div class="card-image">
-        <img [src]="item.image">
+        <div class="card-image parent-size-img">
+          <img [src]="item.image" class="size-img">
+        </div>
       </div>
 
       <ul>
