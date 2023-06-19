@@ -28,10 +28,17 @@ export class UserService {
     };
     return this.http.post<User>(`http://localhost:3000/api/users`, user, httpOptions).pipe(
       tap(res => console.log(res)),
-      catchError(err => this.handleError(err, undefined))
-    );
+      catchError(err => this.handleError(err, undefined)
+    ));
   }
 
+  getUserById(id: number): Observable<User> {
+
+    return this.http.get<User>(`http://localhost:3000/api/users/${id}`).pipe(
+      tap(res => console.log(res)),
+      catchError(err => this.handleError(err, undefined)
+      ));
+  }
 
 
   private handleError(error: Error, errorValue: any){

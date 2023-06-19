@@ -6,13 +6,15 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { AsideProfileComponent } from './aside-profile/aside-profile.component';
 import { ArticleListComponent } from './blog-list/article-list.component';
 import { FormsModule } from '@angular/forms';
+import { CommentComponent } from './comment/comment.component';
 
 
 @NgModule({
   declarations: [
     AccueilComponent,
     AsideProfileComponent,
-    ArticleListComponent
+    ArticleListComponent,
+    CommentComponent
   ],
   imports: [
     CommonModule,

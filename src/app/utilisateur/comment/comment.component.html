@@ -1,0 +1,49 @@
+<div class="row">
+  <li>
+    <a
+      class="secondary-content display-comment"
+      (click)="toggleComments(article)"
+    >
+      {{
+        showComments ? "Masquer les commentaires" : "Afficher les commentaires"
+      }}
+    </a>
+  </li>
+</div>
+
+<ul *ngIf="showComments">
+
+  <li *ngFor="let comment of article.Comments" class="collection-item" >
+    
+        <div class="content-comment">
+            <div class="user-comment">Utilisateur</div>
+            <p>{{ comment.contenu }}</p>
+          </div>
+
+    </li>
+    <div class="row">
+        <form #formAddComment="ngForm" (submit)="addComment(formAddComment)" class="collection-item">
+          <div class="input-field col s12">
+            <textarea
+              name="contenu"
+              id="contenu"
+              class="materialize-textarea"
+              ngModel
+              required
+            ></textarea>
+            <label for="contenu">Commentaire</label>
+          </div>
+          <div class="col s12">
+            <button
+              class="btn waves-effect waves-light"
+              type="submit"
+              [disabled]="formAddComment.invalid"
+            >
+              Commentez
+            </button>
+          </div>
+        </form>
+    </div>
+</ul>
+
+<!-- Ecrire un nouveau commentaire sous l'article-->
