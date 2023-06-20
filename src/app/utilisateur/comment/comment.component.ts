@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Article } from 'src/app/_model/article.model';
 import { Comment } from 'src/app/_model/comment.model';
@@ -15,7 +15,9 @@ export class CommentComponent implements OnInit {
   @Input()
   article!: Article;
 
-  @Input('comment')
+  @Output() 
+  commentAdded: EventEmitter<void> = new EventEmitter<void>();
+
   showComments!: boolean;
 
   comment!: Comment;
@@ -28,7 +30,6 @@ export class CommentComponent implements OnInit {
 
   ngOnInit(): void {
       this.comments = this.article.Comments;
-      console.log('test')
   }
 
   toggleComments(article: Article) {
@@ -39,11 +40,13 @@ export class CommentComponent implements OnInit {
     this.comment = form.value;
     this.comment.article_id = this.article.id;
     if (this.userId){
-      this.comment.auteur = +this.userId
+      this.comment.auteur = +this.userId;
       this.commentService.addComment(this.comment)
         .subscribe(comment => {
-          this.comments.push(comment)
-          this.refreshArticles(this.comment.article_id)
+          this.comments.push(comment);
+          this.article.Comments = this.comments;
+          form.reset();
+          this.commentAdded.emit();
         })
     }
   }

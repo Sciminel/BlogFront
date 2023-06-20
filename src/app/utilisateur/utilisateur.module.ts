@@ -7,6 +7,7 @@ import { AsideProfileComponent } from './aside-profile/aside-profile.component';
 import { ArticleListComponent } from './blog-list/article-list.component';
 import { FormsModule } from '@angular/forms';
 import { CommentComponent } from './comment/comment.component';
+import { PopupComponent } from './popup/popup.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { CommentComponent } from './comment/comment.component';
     AccueilComponent,
     AsideProfileComponent,
     ArticleListComponent,
-    CommentComponent
+    CommentComponent,
+    PopupComponent
   ],
   imports: [
     CommonModule,

@@ -36,9 +36,9 @@
     <li *ngFor="let article of articles" class="collection-item">
       <div class="card">
         <div class="card-content">
-          <a href="">
-            <i class="tiny material-icons floating right">create</i>
-          </a>
+          <button class="btn floating right" (click)="openModal(article)">
+            <i class="tiny material-icons">create</i>
+          </button>
 
           <div>
             Nom : {{article.User.name}}
@@ -51,9 +51,9 @@
         <div class="card-image parent-size-img">
           <img [src]="article.image" class="size-img">
         </div>
-        <app-comment [article]="article"></app-comment>
+        <app-comment [article]="article" (commentAdded)="onCommentAdded()"></app-comment>
       </div>
-      
-  </ul>
-  
+      </li>
+    </ul>
+    <app-popup [article]="selectedArticle" (articleUpdated)="updateArticle($event)" *ngIf="selectedArticle"></app-popup>
 </div>

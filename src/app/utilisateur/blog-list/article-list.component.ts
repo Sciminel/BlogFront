@@ -3,14 +3,15 @@ import { NgForm } from '@angular/forms';
 import { Article } from 'src/app/_model/article.model';
 import { User } from 'src/app/_model/user.model';
 import { ArticleService } from 'src/app/_service/article.service';
+import { CommentService } from 'src/app/_service/comment.service';
 import { UserService } from 'src/app/_service/user.service';
 
 @Component({
   selector: 'app-article-list',
   templateUrl: './article-list.component.html',
-  styleUrls: ['./article-list.component.css']
+  styleUrls: ['./article-list.component.css'],
 })
-export class ArticleListComponent implements OnInit{
+export class ArticleListComponent implements OnInit {
 
   articles!: Article[];
 
@@ -18,29 +19,49 @@ export class ArticleListComponent implements OnInit{
 
   user!: User;
 
-  @Input('test')
   nameFile: string = '';
 
   showComments: boolean = false;
 
   userId: string | null = localStorage.getItem('userId');
 
-  constructor(private articleService: ArticleService, private userService: UserService) {}
+  selectedArticle: Article | null = null;
+
+  constructor(
+    private articleService: ArticleService,
+    private userService: UserService,
+    private commentService: CommentService
+  ) {}
 
   ngOnInit(): void {
-      this.articleService.getAllArticles()
-        .subscribe(articles => {
-          this.articles = articles;
-          console.log(this.articles)
-          this.articles.forEach(el => {
-            console.log(el)
-          })
+    this.articleService.getAllArticles().subscribe((articles) => {
+      this.articles = articles;
+      this.articles.forEach((el) => {
+        this.fetchCommentsForArticles();
+      });
+    });
+  }
+
+  private fetchCommentsForArticles() {
+    this.articles.forEach((article) => {
+      this.articleService.getArticleById(article.id)
+        .subscribe((art) => {
+          article.Comments = art.Comments;
         })
+    });
+  }
+
+  onCommentAdded() {
+    this.fetchCommentsForArticles(); // Mettre à jour les commentaires après l'ajout d'un commentaire
+  }
+
+  openModal(article: Article) {
+    this.selectedArticle = article;
   }
 
   checkFile($event: any) {
     this.nameFile = URL.createObjectURL($event.target.files[0]);
-    console.log($event.target.files[0])
+    console.log($event.target.files[0]);
   }
 
   addArticle(form: NgForm) {
@@ -48,22 +69,20 @@ export class ArticleListComponent implements OnInit{
     this.article.image = this.nameFile;
 
     if (this.userId) {
-
       this.article.auteur = +this.userId;
-      this.articleService.addArticle(this.article)
-      .subscribe(article => {
-        this.articles.push(article)
+      this.articleService.addArticle(this.article).subscribe((article) => {
+        this.articles.push(article);
         this.refreshArticles();
-        form.resetForm();
-      })
-    
+        form.reset();
+      });
     } else {
-      console.log("Une erreur est survenu lors de l'insertion")
+      console.log("Une erreur est survenu lors de l'insertion");
     }
-
   }
 
-
+  updateArticle(article: Article) {
+    console.log(article.titre)
+  }
 
   refreshArticles() {
     this.articleService.getAllArticles().subscribe((articles) => {
@@ -71,5 +90,4 @@ export class ArticleListComponent implements OnInit{
       this.nameFile = '';
     });
   }
-
 }
