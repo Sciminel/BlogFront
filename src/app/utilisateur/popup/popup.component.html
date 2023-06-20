@@ -1,0 +1,41 @@
+<div class="modal-overlay">
+
+      <!-- Modal container -->
+      <div class="modal-container">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <!-- Content of the popup -->
+          <div class="row">
+            <form #formAddArticle="ngForm" (submit)="updateArticle( )" enctype="multipart/form-data">
+        
+              <div class="input-field col s12">
+                <input type="text" id="titre" ngModel name="titre" required />
+                <label for="titre">Titre de l'article</label>
+              </div>
+        
+              <div class="input-field col s12">
+                <textarea name="contenu" id="contenu" class="materialize-textarea" ngModel></textarea> 
+                <label for="contenu">Contenu de l'article</label>
+              </div>
+        
+              <div class="file-field col s12 input-field">
+                <div class="btn">
+                  <span>File</span>
+                  <input type="file" name="image" ngModel id="image" (change)="checkFile($event)">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text"  placeholder="Ajouter une image">
+                </div>
+              </div>
+        
+              <div class="col s12">
+                <button class="btn waves-effect waves-light" type="submit" [disabled]="formAddArticle.invalid">Ajouter un article</button>
+              </div>
+        
+            </form>
+          </div>
+          <!-- Close button -->
+          <span class="modal-close" (click)="closePopup()">&times;</span>
+        </div>
+      </div>
+</div>
