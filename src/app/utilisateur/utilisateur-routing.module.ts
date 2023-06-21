@@ -5,7 +5,7 @@ import { authGuard } from '../_auth/auth.guard';
 import { ArticleUpdateComponent } from './article-update/article-update.component';
 
 const routes: Routes = [
-  { path: 'accueil', component: AccueilComponent },
+  { path: 'accueil', component: AccueilComponent, canActivate: [authGuard] },
   { path: 'article/update/:id', component: ArticleUpdateComponent },
 ];
 

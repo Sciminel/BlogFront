@@ -6,12 +6,11 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   isLoggedIn: boolean = false;
-  redirectToUrl!: string;
 
   constructor() { }
 
   login() {
-
+    this.isLoggedIn = true;
   }
 
 
@@ -19,4 +18,7 @@ export class AuthService {
     this.isLoggedIn = false;
   }
   
+  isAuthenticated() {
+    return this.isLoggedIn;
+  }
 }

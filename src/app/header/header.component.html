@@ -5,13 +5,19 @@
         <!-- Si connecté afficher le profil et la page d'acceuil (liste des articles)-->
         <li>
           <a 
-          *ngIf="isSignUp"
+          *ngIf="isSignUp && !isConnected"
           (click)="changeRoute()"
           >Connexion</a>
         </li>
         <!-- Si page inscription -> Se connecter et inversement -->
         <li>
-          <a  (click)="changeRoute()" *ngIf="!isSignUp">Inscription</a>
+          <a  (click)="changeRoute()" *ngIf="!isSignUp && !isConnected">Inscription</a>
+        </li>
+        <li >
+          <a 
+          *ngIf="isConnected"
+          (click)="logout()"
+          >Deconnexion</a>
         </li>
       </ul>
     </div>
