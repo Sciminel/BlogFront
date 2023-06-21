@@ -47,8 +47,14 @@ export class ArticleService {
   }
 
   updateArticle(article: Article): Observable<Article> {
-
     return this.http.put<Article>(`http://localhost:3000/api/articles/${article.id}`, article).pipe(
+      tap((res) => console.log(res)),
+      catchError((err) => of())
+    )
+  }
+
+  deleteArticle(id: number): Observable<Article> {
+    return this.http.delete<Article>(`http://localhost:3000/api/articles/${id}`).pipe(
       tap((res) => console.log(res)),
       catchError((err) => of())
     )

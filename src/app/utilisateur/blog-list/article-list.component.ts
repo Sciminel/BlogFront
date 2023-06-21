@@ -55,10 +55,6 @@ export class ArticleListComponent implements OnInit {
     this.fetchCommentsForArticles(); // Mettre à jour les commentaires après l'ajout d'un commentaire
   }
 
-  openModal(article: Article) {
-    this.selectedArticle = article;
-  }
-
   checkFile($event: any) {
     this.nameFile = URL.createObjectURL($event.target.files[0]);
     console.log($event.target.files[0]);
@@ -82,6 +78,14 @@ export class ArticleListComponent implements OnInit {
 
   updateArticle(article: Article) {
     console.log(article.titre)
+  }
+
+  deleteArticle(id: number) {
+    this.articleService.deleteArticle(id)
+      .subscribe(() => {
+        this.refreshArticles();
+        console.log('Supprimé')
+      })
   }
 
   refreshArticles() {

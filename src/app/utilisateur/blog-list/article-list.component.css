@@ -27,3 +27,7 @@
     
   }
 
+  .delete-btn {
+    cursor: pointer;
+    margin: 0 10px;
+  }

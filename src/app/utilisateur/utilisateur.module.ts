@@ -5,9 +5,9 @@ import { UtilisateurRoutingModule } from './utilisateur-routing.module';
 import { AccueilComponent } from './accueil/accueil.component';
 import { AsideProfileComponent } from './aside-profile/aside-profile.component';
 import { ArticleListComponent } from './blog-list/article-list.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentComponent } from './comment/comment.component';
-import { PopupComponent } from './popup/popup.component';
+import { ArticleUpdateComponent } from './article-update/article-update.component';
 
 
 @NgModule({
@@ -16,10 +16,11 @@ import { PopupComponent } from './popup/popup.component';
     AsideProfileComponent,
     ArticleListComponent,
     CommentComponent,
-    PopupComponent
+    ArticleUpdateComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     FormsModule,
     UtilisateurRoutingModule
   ]
