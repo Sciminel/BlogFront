@@ -1,0 +1,55 @@
+<h1 class="center">Modifier l'article {{article.titre}} </h1>
+
+
+<div class="row">
+  <form
+  [formGroup]="myForm"
+    enctype="multipart/form-data"
+  >
+    <div class="field col s12">
+      <label for="titre">Titre de l'article</label>
+      <input type="text" id="titre" formControlName="titre" required />
+    </div>
+
+    <div class="field col s12">
+      <label for="contenu">Contenu de l'article</label>
+      <textarea
+        name="contenu"
+        id="contenu"
+        class="materialize-textarea"
+        formControlName="contenu"
+      ></textarea>
+    </div>
+
+    <div class="file-field col s12 input-field">
+      <div class="btn">
+        <span>File</span>
+        <input
+          type="file"
+          name="image"
+          formControlName="image"
+          id="image"
+          (change)="checkFile($event)"
+        />
+      </div>
+      <div class="file-path-wrapper">
+        <input
+          class="file-path validate"
+          type="text"
+          placeholder="Ajouter une image"
+          formControlName="image"
+        />
+      </div>
+    </div>
+
+    <div class="col s12">
+      <button
+        class="btn waves-effect waves-light"
+        type="submit"
+        (click)="onSubmitForm()"
+      >
+        Ajouter un article
+      </button>
+    </div>
+  </form>
+</div>
