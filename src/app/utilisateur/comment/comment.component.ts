@@ -2,8 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Article } from 'src/app/_model/article.model';
 import { Comment } from 'src/app/_model/comment.model';
+import { User } from 'src/app/_model/user.model';
 import { ArticleService } from 'src/app/_service/article.service';
 import { CommentService } from 'src/app/_service/comment.service';
+import { UserService } from 'src/app/_service/user.service';
 
 @Component({
   selector: 'app-comment',
@@ -14,6 +16,9 @@ export class CommentComponent implements OnInit {
 
   @Input()
   article!: Article;
+
+  @Input()
+  user!: User;
 
   @Output() 
   commentAdded: EventEmitter<void> = new EventEmitter<void>();
@@ -26,7 +31,7 @@ export class CommentComponent implements OnInit {
   
   userId: string | null = localStorage.getItem('userId');
 
-   constructor(private commentService: CommentService, private articleService: ArticleService) {}
+   constructor(private commentService: CommentService, private articleService: ArticleService, private userService: UserService) {}
 
   ngOnInit(): void {
       this.comments = this.article.Comments;
@@ -49,6 +54,10 @@ export class CommentComponent implements OnInit {
           this.commentAdded.emit();
         })
     }
+  }
+
+  updateComment(comment: Comment) {
+    console.log(comment)
   }
 
 

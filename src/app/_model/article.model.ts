@@ -6,7 +6,7 @@ export class Article {
     titre!: string;
     contenu!: string;
     auteur!: number;
-    image!: string;
+    image!: ArrayBuffer;
     Comments!: Comment[];
     User!: User;
     createdAt!: Date;

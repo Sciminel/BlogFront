@@ -13,20 +13,18 @@
           <label for="contenu">Contenu de l'article</label>
         </div>
 
-        <div class="file-field col s12 input-field">
-          <div class="btn">
+        <div class="file-field col s1 input-field">
+          <div class="btn light-blue">
             <span>File</span>
-            <input type="file" name="image" ngModel id="image" (change)="checkFile($event)">
-          </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" type="text"  placeholder="Ajouter une image">
+            <input type="file" name="image" ngModel id="image" accept="image/*" (change)="checkFile($event)">
           </div>
         </div>
-
+        <div class="" *ngIf="name">
+          <img [src]="name" class="img-add" >
+        </div>
         <div class="col s12">
           <button class="btn waves-effect waves-light" type="submit" [disabled]="formAddArticle.invalid">Ajouter un article</button>
         </div>
-
       </form>
     </div>
   </div>
@@ -35,13 +33,15 @@
   <ul class="collection">
     <li *ngFor="let article of articles" class="collection-item">
       <div class="card">
-        <div class="card-content">
-          <a class=" floating right delete-btn" (click)="deleteArticle(article.id)">
-            <i class="small material-icons">clear</i>
-          </a>
-          <a class=" floating right" [routerLink]="['/article/update', article.id]">
-            <i class="small material-icons">create</i>
-          </a>
+        <div class="card-content espace">
+          <div *ngIf="user">
+            <a *ngIf="user.id == article.auteur"  class=" floating right delete-btn" (click)="deleteArticle(article)">
+              <i class="small material-icons">clear</i>
+            </a>
+            <a *ngIf="user.id == article.auteur" class=" floating right" [routerLink]="['/article/update', article.id]">
+              <i class="small material-icons">create</i>
+            </a>
+          </div>
 
           <div>
             Nom : {{article.User.name}}
@@ -51,10 +51,10 @@
           </div>
           Contenu : {{ article.contenu }}
         </div>
-        <div class="card-image parent-size-img">
+        <div class="card-image parent-size-img" *ngIf="article.image">
           <img [src]="article.image" class="size-img">
         </div>
-        <app-comment [article]="article" (commentAdded)="onCommentAdded()"></app-comment>
+        <app-comment [article]="article"  [user]="user" (commentAdded)="onCommentAdded()"></app-comment>
       </div>
       </li>
     </ul>

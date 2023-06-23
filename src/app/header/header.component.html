@@ -1,24 +1,26 @@
 <nav>
-    <div class="nav-wrapper teal">
-      <a href="#" class="brand-logo">Logo</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <!-- Si connecté afficher le profil et la page d'acceuil (liste des articles)-->
-        <li>
-          <a 
-          *ngIf="isSignUp && !isConnected"
-          (click)="changeRoute()"
-          >Connexion</a>
-        </li>
-        <!-- Si page inscription -> Se connecter et inversement -->
-        <li>
-          <a  (click)="changeRoute()" *ngIf="!isSignUp && !isConnected">Inscription</a>
-        </li>
+  <div class="nav-wrapper light-blue">
+    <a class="brand-logo">
+      <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/007.png" style="width: 75px" alt="">
+    </a>
+    <ul  class="right">
+      <!-- Si connecté afficher le profil et la page d'acceuil (liste des articles)-->
+
+      <div *ngIf="!isConnected">
         <li >
-          <a 
-          *ngIf="isConnected"
-          (click)="logout()"
-          >Deconnexion</a>
+          <a  *ngIf="isSignUp" (click)="changeRoute()">Connexion</a>
         </li>
-      </ul>
-    </div>
-  </nav>
+        <li>
+          <a *ngIf="!isSignUp" (click)="changeRoute()" >Inscription</a>
+        </li>
+      </div>
+
+      <div *ngIf="isConnected">
+        <li>
+          <a (click)="logout()" >Déconnexion</a>
+        </li>
+      </div>
+
+    </ul>
+  </div>
+</nav>

@@ -29,5 +29,15 @@
 
   .delete-btn {
     cursor: pointer;
-    margin: 0 10px;
+    margin: 0 0 0 10px ;
+  }
+
+  .espace {
+    padding: 20px 0 30px 10px;
+  }
+
+  .img-add {
+    width: 50%; 
+    display: block; 
+    margin: 0 auto;
   }

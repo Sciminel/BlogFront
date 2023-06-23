@@ -4,6 +4,8 @@ import { UserService } from '../_service/user.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../_service/auth.service';
+import { HeaderComponent } from '../header/header.component';
+import { HeaderService } from '../_service/header.service';
 
 @Component({
   selector: 'app-login',
@@ -14,14 +16,19 @@ export class LoginComponent implements OnInit{
 
   user!: User; 
 
-  constructor(private userService: UserService, private router: Router, private authService: AuthService) {}
+  constructor(
+    private userService: UserService, 
+    private router: Router, 
+    private authService: AuthService,
+    private headerService: HeaderService) {}
 
   ngOnInit(): void {
+    this.authService.logout();
   }
 
   login() {
     this.authService.login();
-    console.log(this.authService.isAuthenticated())
+    this.headerService.isUserLoggedIn.next(true);
   }
 
 
@@ -34,7 +41,7 @@ export class LoginComponent implements OnInit{
           this.login();
           this.router.navigate(['/accueil']);
         } else {
-          console.log("erreur sur la connexion")
+          console.log("erreur sur la connexion");
         }
       })
   }

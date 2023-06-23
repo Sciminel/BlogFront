@@ -19,7 +19,9 @@ export class ArticleListComponent implements OnInit {
 
   user!: User;
 
-  nameFile: string = '';
+  nameFile!: File;
+
+  name!: ArrayBuffer | undefined;
 
   showComments: boolean = false;
 
@@ -36,10 +38,16 @@ export class ArticleListComponent implements OnInit {
   ngOnInit(): void {
     this.articleService.getAllArticles().subscribe((articles) => {
       this.articles = articles;
-      this.articles.forEach((el) => {
-        this.fetchCommentsForArticles();
-      });
+      if (this.userId) {
+        this.userService.getUserById(+this.userId)
+          .subscribe(user => {
+            this.user = user;
+            console.log(user)
+          })
+      }
+
     });
+
   }
 
   private fetchCommentsForArticles() {
@@ -56,42 +64,59 @@ export class ArticleListComponent implements OnInit {
   }
 
   checkFile($event: any) {
-    this.nameFile = URL.createObjectURL($event.target.files[0]);
-    console.log($event.target.files[0]);
+    this.nameFile = $event.target.files[0];
+    let reader: FileReader = new FileReader();
+
+    reader.onloadend = (e) => {
+      this.name = reader.result as ArrayBuffer;
+      console.log(this.name)
+    }
+    reader.readAsDataURL(this.nameFile)
+    // this.name = URL.createObjectURL(this.nameFile);
   }
 
   addArticle(form: NgForm) {
     this.article = form.value;
-    this.article.image = this.nameFile;
-
-    if (this.userId) {
-      this.article.auteur = +this.userId;
-      this.articleService.addArticle(this.article).subscribe((article) => {
-        this.articles.push(article);
-        this.refreshArticles();
-        form.reset();
-      });
+    if (this.name) {
+      this.article.image = this.name;
+      if (this.userId) {
+        this.article.auteur = +this.userId;
+        this.articleService.addArticle(this.article).subscribe((article) => {
+          this.articles.push(article);
+          this.refreshArticles();
+          form.reset();
+        });
+      } else {
+        console.log("Une erreur est survenu lors de l'insertion");
+      }    
     } else {
-      console.log("Une erreur est survenu lors de l'insertion");
+      console.log("Erreur sur l'image")
     }
+
   }
 
   updateArticle(article: Article) {
-    console.log(article.titre)
+    this.articleService.updateArticle(article)
+      .subscribe(article => {
+        console.log(article)
+      })
   }
 
-  deleteArticle(id: number) {
-    this.articleService.deleteArticle(id)
+  deleteArticle(article: Article) {
+    if(confirm("Voulez vous vraiment supprimer l'article : "+ article.titre)) {
+      this.articleService.deleteArticle(article.id)
       .subscribe(() => {
         this.refreshArticles();
         console.log('Supprimé')
       })
+    }
+
   }
 
   refreshArticles() {
     this.articleService.getAllArticles().subscribe((articles) => {
       this.articles = articles;
-      this.nameFile = '';
     });
+    this.name = undefined;
   }
 }

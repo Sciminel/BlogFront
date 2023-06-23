@@ -29,7 +29,6 @@ export class ArticleService {
     };
 
     return this.http.get<Article>('http://localhost:3000/api/articles/'+id, httpOptions).pipe( 
-      tap((res) => this.log(res)),
         catchError((err) => {
           return of()
         })
